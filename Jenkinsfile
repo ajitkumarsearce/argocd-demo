@@ -60,17 +60,5 @@ spec:
         }
       }
     }
-
-    stage('Deploy to Prod') {
-      steps {
-        input message:'Approve deployment?'
-        container('tools') {
-          dir("argocd-demo-deploy") {
-            sh "cd ./prod && kustomize edit set image alexmt/argocd-demo:${env.GIT_COMMIT}"
-            sh "git commit -am 'Publish new version' && git push || echo 'no changes'"
-          }
-        }
-      }
-    }
   }
 }
